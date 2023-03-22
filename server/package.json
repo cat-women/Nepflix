@@ -4,10 +4,9 @@
   "description": "",
   "type": "module",
   "main": "index.js",
-  
-  "scripts": {    
+  "scripts": {
     "start": "node index.js",
-    "devStart":"nodemon index.js",
+    "devStart": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "cat-women",
@@ -22,5 +21,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.1",
     "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
   }
 }

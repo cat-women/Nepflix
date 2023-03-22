@@ -6,6 +6,8 @@ import dotenv from 'dotenv'
 
 import ErrorHandler from './src/middlerware/errorHandler.js'
 import Movie from './src/routes/movie.js'
+import User from './src/routes/user.js'
+
 const app = express()
 dotenv.config()
 
@@ -25,8 +27,9 @@ mongoose
   )
   .catch(err => console.log(err.message))
 
-
 // erro handler
 app.use(ErrorHandler)
 
+// routes
 app.use('/movie', Movie)
+app.use('/user', User)
