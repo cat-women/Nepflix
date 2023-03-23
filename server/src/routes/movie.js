@@ -1,11 +1,13 @@
 import express from 'express'
 import MovieController from '../Controllers/movieController.js'
 
-const controller = new MovieController()
+const movie = new MovieController()
 
 const router = express.Router()
 
-router.get('/genre/:genre', controller.getGenre)
-router.get('/allGenre', controller.getAllGenre)
+router.get('/genre/:genre', movie.getGenre)
+router.get('/allGenre', movie.getAllGenre)
+router.get('/', movie.getAllMovie)
+
 
 export default router

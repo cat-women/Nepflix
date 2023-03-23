@@ -34,4 +34,15 @@ export default class MovieController {
       next()
     }
   }
+
+  getAllMovie = async (req, res, next) => {
+    try {
+      const movies = await movieService.getAllMovie()
+      if (movies.length === 0 || !movies)
+        res.status(404).json({ message: 'No movies found' })
+      res.status(200).json(movies)
+    } catch (error) {
+      next()
+    }
+  }
 }

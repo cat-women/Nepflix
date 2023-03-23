@@ -34,4 +34,16 @@ export default class MovieService {
       throw new Error('someting went wrong')
     }
   }
+
+  getAllMovie = async (req, res, next) => {
+    try {
+      const movies = await Movies.find({}, { Series_Title: 1, _id: 1 })
+      return movies
+    } catch (error) {
+      console.log(error)
+      throw new Error('something went wrong')
+    }
+  }
+
+  getRecommendation = async (req, res, next) => {}
 }

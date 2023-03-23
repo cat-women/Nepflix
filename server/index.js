@@ -8,6 +8,7 @@ import ErrorHandler from './src/middlerware/errorHandler.js'
 import Movie from './src/routes/movie.js'
 import User from './src/routes/user.js'
 import Rating from './src/routes/rating.js'
+import WatchedList from './src/routes/watchList.js'
 
 const app = express()
 dotenv.config()
@@ -35,3 +36,4 @@ app.use(ErrorHandler)
 app.use('/movie', Movie)
 app.use('/user', User)
 app.use('/rating', Rating)
+app.use('/watchList', WatchedList)

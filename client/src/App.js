@@ -34,6 +34,30 @@ function App () {
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
    
+      <Movies />
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+   
+      <Movies />
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam tenetur reiciendis amet quibusdam vitae repudiandae rem nostrum praesentium consequuntur, cum iure? Rerum eligendi id ducimus sunt delectus at libero eum?
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum necessitatibus dignissimos modi officiis nostrum mollitia minima alias. Adipisci, blanditiis facilis vitae officiis quidem nulla dolor debitis perferendis nam sequi nostrum?
+   
     </div>
   )
 }
