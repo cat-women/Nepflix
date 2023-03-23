@@ -1,37 +1,16 @@
 import Movies from '../models/Movie.js'
+import MovieService from '../Services/movieService.js'
+
+const movieService = new MovieService()
 
 export default class MovieController {
   getAllGenre = async (req, res, next) => {
     try {
-      const results = await Movies.aggregate([
-        { $match: { Genre: { $exists: true } } },
-        {
-          $project: {
-            genreWords: {
-              $split: [
-                {
-                  $replaceAll: { input: '$Genre', find: ',', replacement: '' }
-                },
-                ' '
-              ]
-            }
-          }
-        },
-        { $unwind: '$genreWords' },
-        {
-          $group: {
-            _id: '$genreWords',
-            count: { $sum: 1 }
-          }
-        },
-        { $sort: { count: -1 } }
-      ])
-
+      const results = await movieService.getAllGenre()
       if (!results) return res.status(404).json({ msg: 'No Genre' })
 
       return res.status(200).json(results)
     } catch (error) {
-      console.log(error)
       next()
     }
   }
@@ -55,5 +34,4 @@ export default class MovieController {
       next()
     }
   }
-  
 }

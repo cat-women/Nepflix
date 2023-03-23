@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import ErrorHandler from './src/middlerware/errorHandler.js'
 import Movie from './src/routes/movie.js'
 import User from './src/routes/user.js'
+import Rating from './src/routes/rating.js'
 
 const app = express()
 dotenv.config()
@@ -33,3 +34,4 @@ app.use(ErrorHandler)
 // routes
 app.use('/movie', Movie)
 app.use('/user', User)
+app.use('/rating', Rating)
