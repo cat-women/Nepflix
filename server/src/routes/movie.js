@@ -8,6 +8,6 @@ const router = express.Router()
 router.get('/genre/:genre', movie.getGenre)
 router.get('/allGenre', movie.getAllGenre)
 router.get('/', movie.getAllMovie)
-
+router.get('/recommended/:id', movie.getRecommendation)
 
 export default router

@@ -45,4 +45,21 @@ export default class MovieController {
       next()
     }
   }
+
+  getRecommendation = async (req, res, next) => {
+    try {
+      const recommendedMovies = await movieService.getRecommendation(
+        req.params.id
+      )
+      console.log('final result', recommendedMovies)
+      if (!recommendedMovies) {
+        res.status(404).json({ message: 'No recommendation for you ' })
+        return
+      }
+      res.status(200).json(recommendedMovies)
+    } catch (error) {
+      console.log(error)
+      next()
+    }
+  }
 }
