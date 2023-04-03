@@ -2,10 +2,14 @@ import mongoose from 'mongoose'
 import ErrorHandler from './error.js'
 import Movies from '../models/Movie.js'
 import Rating from '../models/Rating.js'
-import WatchedList from '../models/watchedList.js'
-import RatingService from './ratingService.js'
+import WatchList from '../models/WatchList.js'
+import Preference from '../models/preference.js'
+import PreferenceService from './preferenceService.js'
+import WatchlistService from './watchlistService.js'
 
 const objectId = mongoose.Types.ObjectId
+const preferenceService = new PreferenceService()
+const watchlistService = new WatchlistService()
 
 export default class MovieService {
   getAllGenre = async (req, res, next) => {
@@ -51,69 +55,78 @@ export default class MovieService {
     }
   }
 
-  getRecommendation = async currentUserId => {
-    const ratingService = new RatingService()
+  collaborativeRecommendation = async targetUid => {
     try {
-      const targetUserRating = await ratingService.getRating(currentUserId)
-      const allRating = await ratingService.getAllRating()
+      const targetUserPreference = await preferenceService.find(targetUid)
 
-      // get current user watched list
-      const currentUserWatchedList = await WatchedList.findOne(
-        { uid: objectId(currentUserId) },
-        { watchedList: 1, _id: 0 }
-      ).exec()
+      let targetRating = await watchlistService.getRating(targetUid)
 
-      console.log(
-        'cureent user watchedlist ',
-        currentUserWatchedList.watchedList
-      )
+      // all the use preferences
+      const allPreferences = await preferenceService.getAll()
+      let sim = []
+      let total = 0
+      let rating
+      for (let i = 0; i < allPreferences.length; i++) {
+        let preference = allPreferences[i]
 
-      // calculate similarity
-      let similarUsers = {}
+        if (preference.uid.toString() == targetUid.toString()) continue
 
-      // get movie that current user not watched but other similar user has
-      let recommendedMovies = {}
-      for (const user of allRating) {
-        let similarity = calSimilarity(
-          targetUserRating.genreRatings,
-          user.genreRatings
-        )
+        // get all the movies user had rate/watched
+        rating = await watchlistService.getRating(preference.uid)
 
-        console.log('similarity', similarity)
+        const { rating1, rating2 } = zeroRating(targetRating, rating)
 
-        const moviesNotWatched = await getMoviesOnlyWatchedBySecond(
-          currentUserWatchedList.watchedList,
-          user.userId
-        )
+        // calculate similarity
+        const similarity = await cosSimilarity(rating1, rating2)
 
-        for (let i = 0; i < moviesNotWatched.length; i++) {
-          const movie = moviesNotWatched[i]
-          const originalRating = await this.getOriginalRating(movie)
+        sim.push({ uid: preference.uid, sim: similarity })
+      }
 
-          console.log('movies id', movie, 'rating', originalRating.IMDB_Rating)
+      sim.sort((a, b) => b.sim - a.sim)
 
-          const weight = parseFloat(originalRating.IMDB_Rating) + similarity
-          console.log(
-            'weight ',
-            weight,
-            'recommendedMovies ',
-            recommendedMovies
-          )
-          if (!recommendedMovies.hasOwnProperty(movie)) {
-            recommendedMovies[movie] = weight
-          } else recommendedMovies[movie] += weight
+      console.log('Similarity', sim)
+      // console.log("Movies that user already rated",targetRating)
+
+      // predict rating
+      let recommendedMovies = []
+
+      for (let i = 0; i < allPreferences.length; i++) {
+        let preference = allPreferences[i]
+        if (preference.uid.toString() === targetUid.toString()) {
+          console.log('dont compare for same user')
+          continue
+        }
+        rating = await watchlistService.getRating(preference.uid)
+
+        // if  target user have already watched that movie skip
+
+        for (let k = 0; k < rating.length; k++) {
+          let movieId = rating[k].movieId
+          let isFound = false
+          for (let j = 0; j < targetRating.length; j++) {
+            if (targetRating[j].movieId.toString() === movieId.toString()) {
+              isFound = true
+
+              break
+            }
+          }
+
+          if (!isFound) {
+            let predictedRating = await predictRating(
+              preference.uid,
+              movieId,
+              sim
+            )
+            recommendedMovies.push({
+              movieId: movieId,
+              rating: predictedRating
+            })
+          }
         }
       }
-      const movies = Object.entries(recommendedMovies).sort(
-        (a, b) => b[1] - a[1]
-      )
-
-
-      return movies
-    } catch (error) {
-      console.log(error)
-      throw new Error('Somethings went wrong')
-    }
+      recommendedMovies.sort((a, b) => b.rating - a.rating)
+      return recommendedMovies
+    } catch (error) {}
   }
 
   getOriginalRating = async id => {
@@ -128,40 +141,60 @@ function getRating (objects) {
   })
   return rating
 }
+function zeroRating (userRating1, userRating2) {
+  const a = userRating1.slice()
+  const b = userRating2.slice()
 
-function calSimilarity (user1, user2) {
-  let a = getRating(Object.values(user1))
+  const result = a.concat(b).reduce((acc, { movieId, rating }) => {
+    if (!acc[movieId]) {
+      acc[movieId] = [0, 0]
+    }
+    acc[movieId][a.some(i => i.movieId === movieId) ? 0 : 1] = rating
+    return acc
+  }, {})
 
-  let b = getRating(Object.values(user2))
+  let rating1 = []
+  let rating2 = []
+  for (const movieId in result) {
+    rating1.push(result[movieId][0])
+    rating2.push(result[movieId][1])
+  }
+  return { rating1, rating2 }
+}
 
-  const dotProduct = a.reduce(
-    (sum, element, index) => sum + element * b[index],
-    0
-  )
+function cosSimilarity (a, b) {
+  console.log('Rating vector', a, b)
+  const dotProduct = a.reduce((acc, cur, index) => {
+    acc += cur * b[index]
+    return acc
+  }, 0)
   const aMagnitude = Math.sqrt(
-    a.reduce((sum, element) => sum + Math.sqrt(element), 0)
+    a.reduce((sum, element) => sum + Math.pow(element, 2), 0)
   )
   const bMagnitude = Math.sqrt(
-    b.reduce((sum, element) => sum + Math.sqrt(element), 0)
+    b.reduce((sum, element) => sum + Math.pow(element, 2), 0)
   )
   const cosineSimilarity = dotProduct / (aMagnitude * bMagnitude)
-
+  console.log('finished calculating similarity ')
   return Math.round(cosineSimilarity * 100) / 100
 }
 
-async function getMoviesOnlyWatchedBySecond (firstUserMovie, secondUser) {
-  try {
-    const secondUserMovie = await WatchedList.findOne(
-      { uid: secondUser },
-      { watchedList: 1, _id: 0 }
-    ).exec()
-    if (!secondUserMovie) return []
-    const movies = secondUserMovie.watchedList.filter(
-      movieId => !firstUserMovie.includes(movieId)
-    )
+async function predictRating (uid, mid, similarity) {
+  // sum of similarity
+  let totalSim = await similarity.reduce((acc, curr) => acc + curr.sim, 0)
 
-    return movies
-  } catch (error) {
-    console.log(error)
-  }
+  // total rating for movie
+  let rating = await watchlistService.getMovieRating(mid)
+  let totalRating = rating.reduce((acc, obj) => acc + obj.rating, 0)
+  // console.log('movies rating ', rating)
+  // user similarity for movieId
+  const weight = similarity.find(item => item.uid.toString() === uid.toString())
+
+  const userRate = weight ? weight.sim : null
+
+  // predicted rating
+  const test = totalRating / 3
+  // console.log(`predicted rating ${test}`)
+  let predictedRating = (totalRating * userRate) / totalSim
+  return Math.round(predictedRating * 100) / 100
 }

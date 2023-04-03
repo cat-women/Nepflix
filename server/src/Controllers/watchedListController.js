@@ -1,29 +1,33 @@
-import WatchedList from '../models/watchedList.js'
+import WatchList from '../models/WatchList.js'
+import PreferenceService from '../Services/preferenceService.js'
 
-export default class WatchedListController {
+const preferenceService = new PreferenceService()
+
+export default class WatchListController {
   addWatchList = async (req, res, next) => {
-    const { uid, movieId } = req.body
+    const { uid, movieId, rating } = req.body
+    const filter = { movieId: movieId, uid: uid }
     try {
-      const oldList = await WatchedList.find({ uid: uid })
+      const oldList = await WatchList.findOne(filter)
       let result
 
-      if (oldList.length > 0) {
-        let list = oldList[0].watchedList
-        if (list.includes(movieId)) {
-          res.status(400).json({ message: 'bad request' })
-          return
-        }
-        list.push(movieId)
-        result = await WatchedList.findOneAndUpdate(
-          { uid: uid },
-          { watchedList: list }
-        )
+      if (oldList) {
+        result = await WatchList.findOneAndUpdate(filter, { rating: rating })
       } else {
-        const watchedList = new WatchedList({
+        const watchList = new WatchList({
           uid: uid,
-          watchedList: [movieId]
+          movieId: movieId,
+          rating: rating
         })
-        result = await watchedList.save()
+
+        result = await watchList.save()
+        if (result) {
+          let preference = await preferenceService.find(uid)
+          let update
+          if (preference)
+            update = await preferenceService.update(uid, result._id)
+          else update = await preferenceService.add(uid, result._id)
+        }
       }
       res.status(200).json(result)
     } catch (error) {
