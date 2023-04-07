@@ -47,7 +47,7 @@ export default class MovieService {
 
   getAllMovie = async (req, res, next) => {
     try {
-      const movies = await Movies.find({}, { Series_Title: 1, _id: 1 })
+      const movies = await Movies.find({}).limit(40)
       return movies
     } catch (error) {
       console.log(error)

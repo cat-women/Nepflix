@@ -4,19 +4,25 @@ module.exports = {
     commonjs: true,
     es2021: true
   },
-  extends: ['plugin:react/recommended', 'standard'],
+  extends: ["plugin:react/recommended", "standard"],
   settings: {
     react: {
-     version: "detect",
-    },
+      version: "detect"
+    }
   },
   overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: "latest"
   },
-  plugins: ['react'],
+  plugins: ["react"],
   rules: {
-    'no-extra-semi': 'warn',
-    'no-trailing-spaces': 'warn'
+    semi: [1, "always"],
+    "no-trailing-spaces": "warn",
+    "react/prop-types": "off",
+    "no-tabs": "off",
+    indent: ["warn", 2],
+    "comma-dangle": "off",
+    quotes: ["warn", "double"],
+    "space-before-function-paren": ["warn", "always"]
   }
-}
+};

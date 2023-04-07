@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const ScrollableDivWithScrollbar = () => {
   return (
@@ -10,7 +10,7 @@ const ScrollableDivWithScrollbar = () => {
         position: 'relative'
       }}
     >
-      {Array.from(Array(10).keys()).map(i => (
+      {Array.from(Array(10).keys()).map(i =>
         <div
           key={i}
           style={{
@@ -19,13 +19,15 @@ const ScrollableDivWithScrollbar = () => {
             margin: '0 10px'
           }}
         >
-          <h2>Item {i + 1}</h2>
+          <h2>
+						Item {i + 1}
+          </h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore magna aliqua.
           </p>
         </div>
-      ))}
+      )}
       <div
         style={{
           height: '5px',
@@ -35,9 +37,9 @@ const ScrollableDivWithScrollbar = () => {
           left: '0',
           right: '0'
         }}
-      ></div>
+      />
     </div>
-  )
-}
+  );
+};
 
-export default ScrollableDivWithScrollbar
+export default ScrollableDivWithScrollbar;

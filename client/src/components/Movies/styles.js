@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   cards: {
@@ -37,6 +37,6 @@ const useStyles = makeStyles(theme => ({
     scrollSnapAlign: 'start',
     transition: 'all 0.2s'
   }
-}))
+}));
 
-export default useStyles
+export default useStyles;

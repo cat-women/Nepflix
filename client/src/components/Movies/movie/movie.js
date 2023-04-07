@@ -1,36 +1,32 @@
-import * as React from 'react'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import useStyle from './styles.js';
 
-import useStyle from './styles.js'
-
-export default function MediaCard () {
-  const classess = useStyle()
-
+export default function MediaCard (props) {
+  const classess = useStyle();
   return (
-    <Card sx={{ maxWidth: 400 }} className={classess.card}>
-      <CardMedia
-        className={classess.media}
-        image='./1.jpg'
-        title='Avatar the way of water'
-      />
+    <Card sx={{ maxWiydth: 400, backgroundColor: '#545050' }} className={classess.card}>
+      <CardMedia className={classess.media} image={props.Poster_Link} title={props.Series_Title} />
       <CardContent className={classess.content}>
-        <Typography gutterBottom className={classess.title}>
-          Lizard
+        <Typography gutterBottom className={classess.title} variant="h4">
+          {props.Series_Title}
         </Typography>
-        <Typography variant='subtitle1' className={classess.detail}>
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography variant="subtitle1" className={classess.detail}>
+          {props.Overview}
         </Typography>
       </CardContent>
       <CardActions className={classess.cardActions}>
-        <Button size='small'>Share</Button>
-        <Button size='small'>Learn More</Button>
+        {Array.from({ length: 5 }).map((_, index) =>
+          <React.Fragment key={index}>
+            <StarBorderIcon />
+          </React.Fragment>
+        )}
       </CardActions>
     </Card>
-  )
+  );
 }
