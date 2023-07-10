@@ -1,6 +1,7 @@
 import User, { validateUser } from '../models/User.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
 export default class UserController {
   get = async (req, res, next) => {
     res.status(200).json('message')

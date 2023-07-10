@@ -46,8 +46,31 @@ export default class MovieController {
     }
   }
 
+
+
+
+
   getRecommendation = async (req, res, next) => {
     try {
+      const recommendedMovies = getRecommendataion(req.params.id)
+
+      res.status(200).json(recommendedMovies)
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
       const recommendedMovies = await movieService.collaborativeRecommendation(
         req.params.id
       )

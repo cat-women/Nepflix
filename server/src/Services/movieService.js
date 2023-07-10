@@ -196,5 +196,6 @@ async function predictRating (uid, mid, similarity) {
   const test = totalRating / 3
   // console.log(`predicted rating ${test}`)
   let predictedRating = (totalRating * userRate) / totalSim
+  
   return Math.round(predictedRating * 100) / 100
 }
