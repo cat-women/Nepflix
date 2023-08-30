@@ -9,6 +9,7 @@ import { getMovies } from "./api/movieApi.js";
 function App() {
   const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector(store => store.auth);
+  
   useEffect(() => {
     dispatch(getMovies());
   }, []);

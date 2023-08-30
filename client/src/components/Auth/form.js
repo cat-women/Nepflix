@@ -143,6 +143,14 @@ const Form = () => {
                 autoFocus
                 className={classess.input}
               />}
+            {isSignUp &&
+              <Input
+                name="address"
+                placeholder="Address"
+                onChange={handleChange}
+                autoFocus
+                className={classess.input}
+              />}
           </Grid>
           <Grid className={classess.footer1}>
             <Button className={classess.btnSubmit} type="submit">
